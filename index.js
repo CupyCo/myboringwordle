@@ -1,6 +1,5 @@
 containers = document.querySelectorAll("div.wordSpace");
 testRow = document.getElementById("testRow");
-testCol = document.getElementById("testCol");
 const winModal = document.getElementById("winModal");
 const restartBtn = document.getElementById("restartBtn");
 const toast = document.getElementById("toast");
@@ -91,7 +90,59 @@ const ROWS = 6;
 let col = 0;
 let row = 0;
 
-let answer = words[Math.floor(Math.random() * words.length)]
+
+
+let answer="";
+
+async function fetchData() {
+  try{
+    const response = await fetch("https://random-word-api.herokuapp.com/word?length=5&diff=2");
+    if(!response.ok){   
+      throw new Error("Could not get data")
+    }       
+    return await response.json();
+
+  }
+  catch(error){
+    console.error(error);
+  }
+    
+}
+
+async function checkData(word) {
+  try {
+    const response = await fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+    );
+
+    return response.ok;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+
+
+async function startGame() {
+  try{
+    const data = await fetchData();
+    answer = data[0];
+    console.log(answer);
+    testRow.textContent = answer;
+    enableInput = true;
+  }
+  catch(e){
+    console.error(e);
+  }
+  
+}
+let enableInput = false;
+startGame();
+
+//let answer = words[Math.floor(Math.random() * words.length)]
+//let answer = fetchData();
+
 
 function showWin() {
   winModal.classList.remove("hidden");
@@ -102,22 +153,21 @@ function hideWin() {
 }
 
 function resetGame() {
-  // сброс состояния
+
   row = 0;
   col = 0;
-  testRow.textContent = "0";
-  testCol.textContent = "0";
 
-  // очистка клеток и цветов
+
+
+
   for (const cell of containers) {
     cell.textContent = "";
-    cell.style.backgroundColor = ""; // вернёт цвет из CSS
-    // если красишь классами, то: cell.classList.remove("green","yellow","gray");
+    cell.style.backgroundColor = ""; 
+
   }
 
-  // выбрать новое слово (если хочешь рандом)
-  answer = words[Math.floor(Math.random() * words.length)];
-
+ 
+  startGame();
   hideWin();
 }
 
@@ -142,7 +192,7 @@ function shakeRow(r) {
     const cell = containers[getIndex(r, c)];
     cell.classList.add("shake");
 
-    // убрать класс после анимации, чтобы можно было трясти снова
+
     cell.addEventListener("animationend", () => {
       cell.classList.remove("shake");
     }, { once: true });
@@ -201,7 +251,8 @@ function checkWord(guess, answer){
 let i=0;
 const regex = /^[a-z]$/i;
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", async (e) => {
+    if (!enableInput) return;
     if(e.repeat) return;
 
     if(row >= ROWS) return;
@@ -210,7 +261,6 @@ document.addEventListener("keydown", (e) => {
         if(col < COLS) {
             containers[getIndex(row, col)].textContent=e.key.toUpperCase();
             col++;
-            testCol.textContent = col;
         }
         return;
     }
@@ -225,12 +275,12 @@ document.addEventListener("keydown", (e) => {
     if(e.key==="Enter"){
         if (col !==COLS) return;
     
-        const guess = getRowWord(row).toUpperCase();
-        
+        const guess = getRowWord(row).toLowerCase();
+        const isValidWord = await checkData(guess);
 
         let colors;
 
-        if(words.includes(guess)){
+        if(isValidWord){
           colors =  checkWord(guess,answer);
         }
         else{
@@ -256,12 +306,11 @@ document.addEventListener("keydown", (e) => {
             return;
         }
 
-        okToMoveNextRow = words.includes(guess)
-        if (okToMoveNextRow) {
+
+
         row++;
-        testRow.textContent = row;
         col = 0;
-        }
+        
     }
 
 });
