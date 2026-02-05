@@ -129,7 +129,7 @@ async function startGame() {
     const data = await fetchData();
     answer = data[0];
     console.log(answer);
-    testRow.textContent = answer;
+   // testRow.textContent = answer;
     enableInput = true;
   }
   catch(e){
