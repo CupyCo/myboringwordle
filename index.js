@@ -96,7 +96,7 @@ let answer="";
 
 async function fetchData() {
   try{
-    const response = await fetch("https://random-word-api.herokuapp.com/word?length=5&diff=2");
+    const response = await fetch("https://random-word-api.herokuapp.com/word?length=5&diff=1");
     if(!response.ok){   
       throw new Error("Could not get data")
     }       
@@ -147,7 +147,11 @@ startGame();
 function showWin() {
   winModal.classList.remove("hidden");
 }
-
+function showLose(){
+  document.getElementById("h2modal").textContent = "You Lost!";
+  document.getElementById("pmodal").textContent = `The correct word was ${answer.toUpperCase()}`;
+  winModal.classList.remove("hidden");
+}
 function hideWin() {
   winModal.classList.add("hidden");
 }
@@ -305,11 +309,15 @@ document.addEventListener("keydown", async (e) => {
             showWin();
             return;
         }
+        
 
 
 
         row++;
         col = 0;
+        if(getIndex(row,col)===30){
+          showLose();
+        }
         
     }
 
