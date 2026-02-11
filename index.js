@@ -5,84 +5,7 @@ const restartBtn = document.getElementById("restartBtn");
 const toast = document.getElementById("toast");
 
 
-const words = [
-"ABOUT","ABOVE","ABUSE","ACTOR","ACUTE","ADMIT","ADOPT","ADULT","AFTER","AGAIN",
-"AHEAD","ALARM","ALBUM","ALERT","ALIKE","ALIVE","ALLOW","ALONE","ALONG","ALTER",
-"AMONG","ANGER","ANGLE","ANGRY","APART","APPLE","APPLY","ARENA","ARGUE","ARISE",
-"ARMED","ARRAY","ASIDE","ASSET","AUDIO","AVOID",
 
-"BADLY","BAKER","BASIC","BASIS","BEACH","BEGAN","BEGIN","BEING","BELOW","BENCH",
-"BIRTH","BLACK","BLAME","BLIND","BLOCK","BLOOD","BOARD","BOOST","BOOTH","BOUND",
-"BRAIN","BRAND","BRAVE","BREAD","BREAK","BRICK","BRIEF","BRING","BROAD","BROKE",
-"BROWN","BUILD","BUILT","BUYER",
-
-"CABLE","CALIF","CARRY","CATCH","CAUSE","CHAIN","CHAIR","CHART","CHASE","CHEAP",
-"CHECK","CHEST","CHIEF","CHILD","CHINA","CHOSE","CIVIL","CLAIM","CLASS","CLEAN",
-"CLEAR","CLICK","CLOCK","CLOSE","COACH","COAST","COULD","COUNT","COURT","COVER",
-"CRAFT","CRASH","CRIME","CROSS","CROWD","CROWN",
-
-"DAILY","DANCE","DATED","DEALT","DEATH","DEBUT","DELAY","DEPTH","DOING","DOUBT",
-"DOZEN","DRAFT","DRAMA","DRAWN","DREAM","DRESS","DRINK","DRIVE","DROVE",
-
-"EARLY","EARTH","EIGHT","ELDER","ELECT","ELITE","EMPTY","ENEMY","ENJOY","ENTER",
-"ENTRY","EQUAL","ERROR","EVENT","EVERY","EXACT","EXIST","EXTRA",
-
-"FAITH","FALSE","FAULT","FIBER","FIELD","FIFTH","FIFTY","FIGHT","FINAL","FIRST",
-"FIXED","FLASH","FLEET","FLOOR","FOCUS","FORCE","FORTH","FORTY","FORUM","FOUND",
-"FRAME","FRANK","FRAUD","FRESH","FRONT","FRUIT","FULLY","FUNNY",
-
-"GIANT","GIVEN","GLASS","GLOBE","GOING","GRACE","GRADE","GRAND","GRANT","GRAPE",
-"GRASS","GREAT","GREEN","GROSS","GROUP","GROWN","GUARD","GUESS","GUEST","GUIDE",
-
-"HAPPY","HARRY","HEART","HEAVY","HENCE","HORSE","HOTEL","HOUSE","HUMAN",
-
-"IDEAL","IMAGE","INDEX","INNER","INPUT","ISSUE",
-
-"JOINT","JUDGE","JUICE",
-
-"KNOWN",
-
-"LABEL","LABOR","LARGE","LASER","LATER","LAUGH","LAYER","LEARN","LEASE","LEAST",
-"LEAVE","LEGAL","LEVEL","LIGHT","LIMIT","LOCAL","LOGIC","LOOSE","LOWER","LUCKY",
-
-"MAGIC","MAJOR","MAKER","MARCH","MATCH","MAYBE","MEANT","MEDIA","METAL","MIGHT",
-"MINOR","MINUTE","MIXED","MODEL","MONEY","MONTH","MORAL","MOTOR","MOUNT","MOUSE",
-"MOUTH","MOVIE","MUSIC",
-
-"NEEDS","NEVER","NEWLY","NIGHT","NOISE","NORTH","NOVEL","NURSE",
-
-"OCCUR","OCEAN","OFFER","OFTEN","ORDER","OTHER","OUGHT","OWNER",
-
-"PAINT","PANEL","PAPER","PARTY","PEACE","PHASE","PHONE","PHOTO","PIECE","PILOT",
-"PITCH","PLACE","PLAIN","PLANE","PLANT","PLATE","POINT","POUND","POWER","PRESS",
-"PRICE","PRIDE","PRIME","PRINT","PRIOR","PRIZE","PROOF","PROUD",
-
-"QUEEN","QUICK","QUIET","QUITE",
-
-"RADIO","RAISE","RANGE","RAPID","RATIO","REACH","READY","REFER","RIGHT","RIVER",
-"ROBOT","ROUGH","ROUND","ROUTE","ROYAL","RURAL",
-
-"SCALE","SCENE","SCOPE","SCORE","SENSE","SERVE","SEVEN","SHALL","SHAPE","SHARE",
-"SHEET","SHELF","SHIFT","SHINE","SHIRT","SHOCK","SHOOT","SHORT","SHOWN","SIGHT",
-"SINCE","SKILL","SMALL","SMART","SMILE","SMOKE","SOLID","SOLVE","SORRY","SOUND",
-"SOUTH","SPACE","SPARE","SPEAK","SPEED","SPEND","SPENT","SPLIT","SPORT","STAFF",
-"STAGE","STAND","START","STATE","STEEL","STICK","STILL","STOCK","STONE","STORE",
-"STORM","STORY","STRIP","STUCK","STUDY","STYLE","SUGAR","SUITE","SUPER","SWEET",
-
-"TABLE","TAKEN","TASTE","TEACH","THANK","THEIR","THEME","THERE","THICK","THING",
-"THINK","THIRD","THOSE","THREE","THROW","TIGHT","TIMES","TIRED","TITLE","TODAY",
-"TOPIC","TOTAL","TOUCH","TOUGH","TOWER","TRACK","TRADE","TRAIN","TREAT","TREND",
-"TRIAL","TRIED","TRUCK","TRULY","TRUST","TRUTH","TWICE",
-
-"UNDER","UNION","UNITY","UNTIL","UPPER","URBAN","USUAL",
-
-"VALID","VALUE","VIDEO","VISIT","VITAL","VOICE",
-
-"WASTE","WATCH","WATER","WHEEL","WHERE","WHILE","WHITE","WHOLE","WHOSE","WOMAN",
-"WORLD","WORRY","WORTH","WOULD","WRITE","WRONG",
-
-"YIELD","YOUNG"
-];
 
 const COLS = 5;
 const ROWS = 6;
@@ -94,13 +17,58 @@ let row = 0;
 
 let answer="";
 
+
+
+const row1 = "qwertyuiop";
+const row2 = "asdfghjkl";
+const row3 = ["enter", "z","x","c","v","b","n","m","back"];
+
+function createKeyboard() {
+    const row1Div = document.querySelector(".keyboard-1-row");
+    const row2Div = document.querySelector(".keyboard-2-row");
+    const row3Div = document.querySelector(".keyboard-3-row");
+
+
+    for (let letter of row1) {
+        row1Div.appendChild(createButton(letter));
+    }
+
+
+    for (let letter of row2) {
+        row2Div.appendChild(createButton(letter));
+    }
+
+
+    for (let key of row3) {
+        row3Div.appendChild(createButton(key));
+    }
+}
+
+function createButton(value) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = value;
+    button.dataset.key = value;   
+    return button;
+}
+
+createKeyboard();
+
+
+
+
+
 async function fetchData() {
   try{
     const response = await fetch("https://random-word-api.herokuapp.com/word?length=5&diff=1");
+    //const response = await fetch("https://random-words-api.kushcreates.com/api?language=en&category=wordle&length=5&words=1");
     if(!response.ok){   
       throw new Error("Could not get data")
-    }       
-    return await response.json();
+    }
+    const data = await response.json();
+
+   // return data[0].word
+      return data
 
   }
   catch(error){
@@ -127,6 +95,7 @@ async function checkData(word) {
 async function startGame() {
   try{
     const data = await fetchData();
+   // answer = data;
     answer = data[0];
     console.log(answer);
    // testRow.textContent = answer;
@@ -252,73 +221,149 @@ function checkWord(guess, answer){
 
 }
 
-let i=0;
-const regex = /^[a-z]$/i;
+function updateKeyboard(letter, color) {
+  const key = document.querySelector(`[data-key="${letter.toLowerCase()}"]`);
+  if (!key) return;
 
-document.addEventListener("keydown", async (e) => {
-    if (!enableInput) return;
-    if(e.repeat) return;
+  const priority = {
+    gray: 1,
+    yellow: 2,
+    green: 3
+  };
 
-    if(row >= ROWS) return;
+  const current = key.dataset.state;
+  const currentPriority = priority[current] || 0;
+  const newPriority = priority[color];
+  if (newPriority > currentPriority) {
+    key.dataset.state = color;
 
-    if(regex.test(e.key)){
-        if(col < COLS) {
-            containers[getIndex(row, col)].textContent=e.key.toUpperCase();
-            col++;
-        }
-        return;
+    key.style.backgroundColor = "d3d6da"; 
+ 
+
+    if(color=="green"){
+      key.style.backgroundColor = "green"; 
     }
-    if(e.key==="Backspace"){
-        if(col > 0){
-            col--;
-            containers[getIndex(row,col)].textContent="";
-        }
-        return;
+    else if(color=="yellow"){
+      key.style.backgroundColor = "hsl(59, 70%, 41%)";
     }
-
-    if(e.key==="Enter"){
-        if (col !==COLS) return;
-    
-        const guess = getRowWord(row).toLowerCase();
-        const isValidWord = await checkData(guess);
-
-        let colors;
-
-        if(isValidWord){
-          colors =  checkWord(guess,answer);
-        }
-        else{
-            shakeRow(row);
-            showToast("Your word is incorrect!");
-            return;
-        }
-
-        for(let i=0;i<colors.length;i++){
-            if(colors[i]=="green"){
-                document.getElementById(getIndex(row,i)).style.backgroundColor = "green"; 
-            }
-            else if(colors[i]=="yellow"){
-                document.getElementById(getIndex(row,i)).style.backgroundColor = "hsl(59, 70%, 41%)";
-            }
-            else{
-                document.getElementById(getIndex(row,i)).style.backgroundColor = "gray";
-            }
-        }
-
-        if (guess === answer) {
-            showWin();
-            return;
-        }
-        
-
-
-
-        row++;
-        col = 0;
-        if(getIndex(row,col)===30){
-          showLose();
-        }
-        
+    else{
+      key.style.backgroundColor = "gray";
     }
 
+  }
+
+}
+
+
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function colorTiles(colors){
+  enableInput = false;
+
+  for(let i=0;i<colors.length;i++){
+
+    tile = document.getElementById(getIndex(row,i));
+    const letter = tile.textContent;
+
+    tile.classList.add("flip");
+    await sleep(200);
+
+    if(colors[i]=="green"){
+      tile.style.backgroundColor = "green"; 
+    }
+    else if(colors[i]=="yellow"){
+      tile.style.backgroundColor = "hsl(59, 70%, 41%)";
+    }
+    else{
+      tile.style.backgroundColor = "gray";
+    }
+    await sleep(200);
+    tile.classList.remove("flip");
+    updateKeyboard(letter, colors[i]);
+        }
+  enableInput = true;
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.repeat) return;
+
+  let key = e.key;
+
+  if (key === "Backspace") key = "Backspace";
+  if (key === "Enter") key = "Enter";
+
+  handleKey(key);
 });
+
+
+document.querySelector(".keyboard-module")
+  .addEventListener("click", (e) => {
+
+    if (e.target.tagName !== "BUTTON") return;
+
+    let key = e.target.dataset.key;
+
+    if (key === "back") key = "Backspace";
+    if (key === "enter") key = "Enter";
+
+    handleKey(key);
+});
+
+
+async function handleKey(key) {
+  if (!enableInput) return;
+  if (row >= ROWS) return;
+
+  const regex = /^[a-z]$/i;
+
+
+  if (regex.test(key)) {
+    if (col < COLS) {
+      containers[getIndex(row, col)].textContent = key.toUpperCase();
+      col++;
+    }
+    return;
+  }
+
+
+  if (key === "Backspace") {
+    if (col > 0) {
+      col--;
+      containers[getIndex(row, col)].textContent = "";
+    }
+    return;
+  }
+
+
+  if (key === "Enter") {
+    if (col !== COLS) return;
+
+    const guess = getRowWord(row).toLowerCase();
+    const isValidWord = await checkData(guess);
+
+    if (!isValidWord) {
+      shakeRow(row);
+      showToast("Your word is incorrect!");
+      return;
+    }
+
+    const colors = checkWord(guess, answer);
+    await colorTiles(colors);
+
+    if (guess === answer) {
+      showWin();
+      return;
+    }
+
+    row++;
+    col = 0;
+
+    if (row === ROWS) {
+      showLose();
+    }
+  }
+}

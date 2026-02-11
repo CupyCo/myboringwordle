@@ -1,35 +1,48 @@
-body{
+body {
     margin: 0;
+    background-color: hsla(0, 0%, 0%, 0.3);
     display: flex;
     justify-content: center;
+    min-height: 90vh;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;   
     align-items: center;
-    padding-top: 5em;
-    background-color: hsla(0, 0%, 0%, 0.3);
+ 
+    padding-top: clamp(1em, 5vw, 2em);
 }
 
+.wordSpace {
+    background-color: hsla(0, 0%, 0%, 0.603);
 
-.wordSpace{
-  background-color: hsla(0, 0%, 0%, 0.603);
-  width: 5rem;
-  height: 5rem;
-  border-radius: 3px;
 
-  display: flex;
-  justify-content: center; /* по горизонтали */
-  align-items: center;     /* по вертикали */
+    width: clamp(3rem, 10vw, 5rem);
+    height: clamp(3rem, 10vw, 5rem);
+    border-radius: 3px;
 
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 2em;          /* размер буквы */
-  color: white;            /* если фон тёмный */
-  text-transform: uppercase; /* если хочешь всегда большие */
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+
+
+    font-size: clamp(1.2em, 4vw, 2em);
+
+    color: white;            
+    text-transform: uppercase; 
+    transition: transform 0.3s;
+    transform-style: preserve-3d;
 }
 
-
-#typeSpace{
+#typeSpace {
     display: grid;
-    grid-template-columns: repeat(5,5em);
-    gap: 1rem;
+
+    grid-template-columns: repeat(5, clamp(3rem, 10vw, 5rem));
+    gap: clamp(0.5rem, 2vw, 1rem);
 }
 
 
@@ -46,13 +59,11 @@ body{
   display: none;
 }
 
-.modal__box{
-  background: white;
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  text-align: center;
-  min-width: 260px;
+.modal__box {
+    min-width: 200px;
+    width: clamp(260px, 50vw, 400px);
 }
+
 
 @keyframes shake {
   0%   { transform: translateX(0); }
@@ -95,4 +106,87 @@ body{
 
 .hidden{
   display: none;
+}
+
+.flip {
+  animation: flip 0.4s ease forwards;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+
+
+.keyboard-module {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 2vw, 8px);
+    align-items: center;
+    margin-top: clamp(15px, 5vw, 30px);
+    user-select: none;
+}
+
+.keyboard-module div {
+    display: flex;
+    gap: clamp(4px, 1vw, 6px);
+}
+
+.keyboard-module button {
+    height: clamp(40px, 10vw, 68px);
+    min-width: clamp(30px, 8vw, 53px);
+    padding: 0 clamp(4px, 1vw, 10px);
+    border: none;
+    border-radius: 6px;
+    background-color: #d3d6da;
+    color: #1a1a1b; 
+    font-size: clamp(12px, 2vw, 14px);
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.keyboard-module button[data-key="enter"],
+.keyboard-module button[data-key="back"] {
+    min-width: clamp(50px, 12vw, 65px);
+    font-size: clamp(10px, 2vw, 12px);
+}
+.keyboard-module button:focus {
+    outline: none;
+}
+
+.key-green {
+  background-color: #6aaa64;
+  color: white;
+}
+
+.key-yellow {
+  background-color: #c9b458;
+  color: white;
+}
+
+.key-gray {
+  background-color: #787c7e;
+  color: white;
+}
+
+
+@media (max-width: 500px) {
+
+
+    .keyboard-module button {
+        height: 48px;
+        min-width: 32px;
+        font-size: 12px;
+        padding: 0 6px;
+    }
 }
