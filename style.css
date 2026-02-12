@@ -5,10 +5,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    align-content: center;
-    min-height: 98dvh;
+    min-height: 100dvh;
 }
-
 
 #typeSpace{
     width: min(30em, 95vw);
