@@ -9,7 +9,6 @@
 }
 
 #typeSpace{
-    margin-top: 20vh;
     width: min(30em, 95vw);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
