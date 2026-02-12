@@ -5,10 +5,11 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    min-height: 100dvh;
+    min-height: 97dvh;
 }
 
 #typeSpace{
+    margin-top: 20vh;
     width: min(30em, 95vw);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
