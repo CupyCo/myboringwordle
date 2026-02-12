@@ -3,10 +3,10 @@
 .game {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     align-content: center;
-    min-height: 97vh;
+    min-height: 98dvh;
 }
 
 
