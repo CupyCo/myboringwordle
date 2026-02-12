@@ -1,26 +1,28 @@
-body {
-    margin: 0;
-    background-color: hsla(0, 0%, 0%, 0.3);
-    display: flex;
-    justify-content: center;
-    min-height: 90vh;
-}
+
 
 .game {
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
+    justify-content: start;
     align-items: center;
- 
-    padding-top: clamp(1em, 5vw, 2em);
+    align-content: center;
+    min-height: 97vh;
+}
+
+
+#typeSpace{
+    width: min(30em, 95vw);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: clamp(0.3rem, 1vw, 0.6rem);
+    flex-grow: 1;
 }
 
 .wordSpace {
     background-color: hsla(0, 0%, 0%, 0.603);
-
-
-    width: clamp(3rem, 10vw, 5rem);
-    height: clamp(3rem, 10vw, 5rem);
     border-radius: 3px;
+    padding: 5px;
+    aspect-ratio: 1/1;
 
     display: flex;
     justify-content: center; 
@@ -38,12 +40,7 @@ body {
     transform-style: preserve-3d;
 }
 
-#typeSpace {
-    display: grid;
 
-    grid-template-columns: repeat(5, clamp(3rem, 10vw, 5rem));
-    gap: clamp(0.5rem, 2vw, 1rem);
-}
 
 
 .modal{
@@ -62,6 +59,11 @@ body {
 .modal__box {
     min-width: 200px;
     width: clamp(260px, 50vw, 400px);
+    background: white;         
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 
@@ -129,37 +131,47 @@ body {
 .keyboard-module {
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, 2vw, 8px);
+    gap: 8px;
+    justify-content: center;
     align-items: center;
-    margin-top: clamp(15px, 5vw, 30px);
+    margin-top: 30px;
     user-select: none;
+    width: 100%;
+    max-width: 500px;
+
 }
 
 .keyboard-module div {
     display: flex;
-    gap: clamp(4px, 1vw, 6px);
+    gap: 6px;
+    width: 100%;
 }
 
 .keyboard-module button {
-    height: clamp(40px, 10vw, 68px);
-    min-width: clamp(30px, 8vw, 53px);
-    padding: 0 clamp(4px, 1vw, 10px);
+
+
     border: none;
     border-radius: 6px;
     background-color: #d3d6da;
     color: #1a1a1b; 
-    font-size: clamp(12px, 2vw, 14px);
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: 
+        background-color 0.2s,
+        transform 0.1s;
+    flex: 1;
+    height: 58px;
+    min-width: 0;
+    padding: 0;
 }
 
 .keyboard-module button[data-key="enter"],
 .keyboard-module button[data-key="back"] {
-    min-width: clamp(50px, 12vw, 65px);
-    font-size: clamp(10px, 2vw, 12px);
+    flex: 1.5;
 }
+
 .keyboard-module button:focus {
     outline: none;
 }
@@ -179,14 +191,3 @@ body {
   color: white;
 }
 
-
-@media (max-width: 500px) {
-
-
-    .keyboard-module button {
-        height: 48px;
-        min-width: 32px;
-        font-size: 12px;
-        padding: 0 6px;
-    }
-}
