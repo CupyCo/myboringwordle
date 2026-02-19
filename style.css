@@ -15,6 +15,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     min-height: 97svh;
+    
 }
 
 #typeSpace{
@@ -22,7 +23,7 @@ html, body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: clamp(0.3rem, 1vw, 0.6rem);
-    flex-grow: 1;
+    
 }
 
 .wordSpace {

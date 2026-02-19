@@ -60,15 +60,15 @@ createKeyboard();
 
 async function fetchData() {
   try{
-    //const response = await fetch("https://random-word-api.herokuapp.com/word?length=5&diff=1");
-    const response = await fetch("https://random-words-api.kushcreates.com/api?language=en&category=wordle&length=5&words=1");
+    const response = await fetch("https://random-word-api.herokuapp.com/word?length=5&diff=1");
+   // const response = await fetch("https://random-words-api.kushcreates.com/api?language=en&category=wordle&length=5&words=1");
     if(!response.ok){   
       throw new Error("Could not get data")
     }
     const data = await response.json();
 
-    return data[0].word
-      //return data
+    //return data[0].word
+      return data
 
   }
   catch(error){
@@ -95,8 +95,8 @@ async function checkData(word) {
 async function startGame() {
   try{
     const data = await fetchData();
-    answer = data;
-    //answer = data[0];
+   // answer = data;
+    answer = data[0];
    // console.log(answer);
    // testRow.textContent = answer;
     enableInput = true;
